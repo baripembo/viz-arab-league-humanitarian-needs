@@ -1,6 +1,6 @@
 function vizTrack(view, content) {
   mpTrack(view, content);
-  gaTrack('viz interaction', 'switch viz', 'oad covid-19 / '+view, content);
+  gaTrack('viz interaction', 'switch viz', 'arab league covid-19 / '+view, content);
 }
 
 function mpTrack(view, content) {
@@ -9,7 +9,7 @@ function mpTrack(view, content) {
     'page title': document.title,
     'embedded in': window.location.href,
     'action': 'switch viz',
-    'viz type': 'oad covid-19',
+    'viz type': 'arab league covid-19',
     'current view': view,
     'content': content
   });
@@ -183,7 +183,6 @@ const countryCodeList = {
   MOZ: '5jojox7h',
   NER: '9gbs4a2a',
   NGA: '3ceksugh',
-  //PAK: '94y0veay',
   PSE: '1emy37d7',
   SDN: 'a2zw3leb',
   SOM: '3s7xeitz',
@@ -194,6 +193,21 @@ const countryCodeList = {
   UKR: 'adkwa0bw',
   VEN: '9vcajdlr',
   YEM: '3m20d1v8',
-  //ZWE: '1ry8x8ul'
+
+  // QAT: '1wpd6xew',
+  // TUN: '0pgugqm8',
+  // OMN: '1btqw71a',
+  // SAU: '3brjdubl',
+  // MRT: 'cem8rg64',
+  // MAR: '2nlzuruu',
+  // LBN: 'b3l5j16w',
+  // KWT: '7hjgjzz2',
+  // JOR: 'b9k8x99b',
+  // EGY: 'a06s3sgu',
+  // DZA: '3forrr60',
+  // DJI: 'akpp0kan',
+  // BHR: 'acpmlx36',
+  // COM: '024napwx',
+  // ARE: 'c7i9f0cj'
 };
 

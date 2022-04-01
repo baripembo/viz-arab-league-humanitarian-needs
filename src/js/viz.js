@@ -17,7 +17,9 @@ var countryTimeseriesChart = '';
 var mapLoaded = false;
 var dataLoaded = false;
 var viewInitialized = false;
-var zoomLevel = 1.4;
+var zoomLevel = 2;
+var centerLon = 30;
+var centerLat = 20;
 
 var hrpData = [];
 var globalCountryList = [];
@@ -30,7 +32,7 @@ $( document ).ready(function() {
   var prod = (window.location.href.indexOf('ocha-dap')>-1 || window.location.href.indexOf('data.humdata.org')>-1) ? true : false;
   //console.log(prod);
 
-  mapboxgl.accessToken = 'pk.eyJ1IjoiaHVtZGF0YSIsImEiOiJja2hnbWs5NzkxMXh2MnNvcmF6dXIxMWE0In0.0GfmJoEJyWFQ5UzNxl2WgA';
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaHVtZGF0YSIsImEiOiJjbDFmN3FhaWcweXg2M3BueGtxZTg4eHQ3In0.IFj31j7clZPWhveCm5kAng';
   var tooltip = d3.select('.tooltip');
   var minWidth = 1000;
   viewportWidth = (window.innerWidth<minWidth) ? minWidth - $('.content-left').innerWidth() : window.innerWidth - $('.content-left').innerWidth();
@@ -54,15 +56,13 @@ $( document ).ready(function() {
     $('#chart-view').height(viewportHeight-$('.tab-menubar').outerHeight()-30);
     $('.country-panel .panel-content').height(viewportHeight - $('.country-panel .panel-content').position().top);
     $('.map-legend.global, .map-legend.country').css('max-height', viewportHeight - 200);
-    if (viewportHeight<696) {
-      zoomLevel = 1.4;
-    }
-
-    //ckb843tjb46fy1ilaw49redy7
+    // if (viewportHeight<696) {
+    //   zoomLevel = 1.4;
+    // }
 
     //load static map -- will only work for screens smaller than 1280
     if (viewportWidth<=1280) {
-      var staticURL = 'https://api.mapbox.com/styles/v1/humdata/ckyw4l9z9002f14p3cyt9g2t0/static/-25,0,'+zoomLevel+'/'+viewportWidth+'x'+viewportHeight+'?access_token='+mapboxgl.accessToken;
+      var staticURL = `https://api.mapbox.com/styles/v1/humdata/ckyw4l9z9002f14p3cyt9g2t0/static/${centerLon},${centerLon},${zoomLevel}/${viewportWidth}x${viewportHeight}?access_token=${mapboxgl.accessToken}`;
       $('#static-map').css('background-image', 'url('+staticURL+')');
     }
 

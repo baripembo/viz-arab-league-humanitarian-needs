@@ -1,12 +1,12 @@
 var map, mapFeatures, globalLayer, globalLabelLayer, globalMarkerLayer, countryLayer, countryBoundaryLayer, countryLabelLayer, countryMarkerLayer, tooltip, markerScale, countryMarkerScale;
-var adm0SourceLayer = 'polbnda_int_uncs-6zgtye';
+var adm0SourceLayer = 'arab_states_polbnda_int_1m_un-dy9soz';
 var hoveredStateId = null;
 function initMap() {
   console.log('Loading map...')
   map = new mapboxgl.Map({
     container: 'global-map',
-    style: 'mapbox://styles/humdata/ckyw4l9z9002f14p3cyt9g2t0',
-    center: [-25, 0],
+    style: 'mapbox://styles/humdata/cl1f9m6ir000r14qvm4uyd42r',
+    center: [centerLon, centerLat],
     minZoom: 1,
     zoom: zoomLevel,
     attributionControl: false
@@ -107,14 +107,6 @@ function displayMap() {
         },
         countryBoundaryLayer
       );
-      // map.addLayer(
-      //   {
-      //     'id': id+'-popdensity',
-      //     'type': 'raster',
-      //     'source': id+'-pop-tileset'
-      //   },
-      //   countryBoundaryLayer
-      // );
 
       map.setLayoutProperty(id+'-popdensity', 'visibility', 'none');
     }
@@ -430,10 +422,11 @@ function handleGlobalEvents(layer) {
       features.forEach(function(feature) {
         if (feature.sourceLayer==adm0SourceLayer)
           target = feature;
-      });      
+      });
       if (target!=undefined) {
         tooltip.setLngLat(e.lngLat);
         if (target.properties.Terr_Name=='CuraÃ§ao') target.properties.Terr_Name = 'Curaçao';
+
         createMapTooltip(target.properties.ISO_3, target.properties.Terr_Name, e.point);
       }
     }
