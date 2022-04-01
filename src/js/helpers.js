@@ -94,15 +94,17 @@ function isVal(value) {
 }
 
 function regionMatch(region) {
-  var match = false;
-  var regions = region.split('|');
-  for (var region of regions) {
-    if (currentRegion=='' || region==currentRegion) {
-      match = true;
-      break;
-    }
-  }
-  return match;
+  // var match = false;
+  // var regions = region.split('|');
+  // for (var region of regions) {
+  //   if (currentRegion=='' || region==currentRegion) {
+  //     match = true;
+  //     break;
+  //   }
+  // }
+  // return match;
+  //console.log(region)
+  return true;
 }
 
 function hasGamData(data, indicator) {
@@ -163,51 +165,29 @@ const regionalList = [
   {id: 'ROWCA', name: 'West and Central Africa'}
 ];
 
-//25 HRP country codes and raster ids
+//HRP country codes and raster ids
 const countryCodeList = {
-  AFG: '8oeer8pw',
-  BDI: '85uxb0dw',
-  BFA: '489tayev',
-  CAF: '6stu6e7d',
-  CMR: '6v09q3l9',
-  COD: '70s1gowk',
-  COL: 'awxirkoh',
-  ETH: '8l382re2',
-  GTM: '3cyria8u',
-  HND: '8kvvnawe',
-  HTI: '4in4ae66',
+  ARE: 'c7i9f0cj',
+  BHR: 'acpmlx36',
+  COM: '024napwx',
+  DJI: 'akpp0kan',
+  DZA: '3forrr60',
+  EGY: 'a06s3sgu',
   IRQ: '079oa80i',
+  JOR: 'b9k8x99b',
+  KWT: '7hjgjzz2',
+  LBN: 'b3l5j16w',
   LBY: '0o4l8ysb',
-  MLI: '17y8a20i',
-  MMR: '7wk9p4wu',
-  MOZ: '5jojox7h',
-  NER: '9gbs4a2a',
-  NGA: '3ceksugh',
+  MAR: '2nlzuruu',
+  MRT: 'cem8rg64',
+  OMN: '1btqw71a',
   PSE: '1emy37d7',
-  SDN: 'a2zw3leb',
+  QAT: '1wpd6xew',
+  SAU: '3brjdubl',
   SOM: '3s7xeitz',
-  SSD: '3556pb27',
-  SLV: '77ydes06',
+  SDN: 'a2zw3leb',
   SYR: '2qt39dhl',
-  TCD: 'd6tya3am',
-  UKR: 'adkwa0bw',
-  VEN: '9vcajdlr',
+  TUN: '0pgugqm8',
   YEM: '3m20d1v8',
-
-  // QAT: '1wpd6xew',
-  // TUN: '0pgugqm8',
-  // OMN: '1btqw71a',
-  // SAU: '3brjdubl',
-  // MRT: 'cem8rg64',
-  // MAR: '2nlzuruu',
-  // LBN: 'b3l5j16w',
-  // KWT: '7hjgjzz2',
-  // JOR: 'b9k8x99b',
-  // EGY: 'a06s3sgu',
-  // DZA: '3forrr60',
-  // DJI: 'akpp0kan',
-  // BHR: 'acpmlx36',
-  // COM: '024napwx',
-  // ARE: 'c7i9f0cj'
 };
 

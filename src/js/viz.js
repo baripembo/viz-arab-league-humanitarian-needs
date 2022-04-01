@@ -17,8 +17,8 @@ var countryTimeseriesChart = '';
 var mapLoaded = false;
 var dataLoaded = false;
 var viewInitialized = false;
-var zoomLevel = 2;
-var centerLon = 30;
+var zoomLevel = 2.7;
+var centerLon = 20;
 var centerLat = 20;
 
 var hrpData = [];
@@ -73,7 +73,7 @@ $( document ).ready(function() {
   function getData() {
     console.log('Loading data...')
     Promise.all([
-      d3.json('https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-covid-viz/master/out.json'),
+      d3.json('https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-arabstate-viz/main/all.json'),
       d3.json('data/ocha-regions-bbox.geojson')
     ]).then(function(data) {
       console.log('Data loaded');
@@ -82,7 +82,7 @@ $( document ).ready(function() {
 
       //parse data
       var allData = data[0];
-      worldData = allData.world_data[0];
+      // worldData = allData.world_data[0];
       regionBoundaryData = data[1].features;
       timeseriesData = allData.covid_series_data;
       regionalData = allData.regional_data;
@@ -151,6 +151,7 @@ $( document ).ready(function() {
       subnationalDataByCountry = d3.nest()
         .key(function(d) { return d['#country+code']; })
         .entries(subnationalData);
+
       subnationalDataByCountry.forEach(function(country) {
         var index = 0;
         var ipcEmpty = false;

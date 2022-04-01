@@ -5,7 +5,7 @@ function initMap() {
   console.log('Loading map...')
   map = new mapboxgl.Map({
     container: 'global-map',
-    style: 'mapbox://styles/humdata/cl1f9m6ir000r14qvm4uyd42r',
+    style: 'mapbox://styles/humdata/cl1f9m6ir000r14qvm4uyd42r?fresh=true',
     center: [centerLon, centerLat],
     minZoom: 1,
     zoom: zoomLevel,
@@ -1507,7 +1507,6 @@ function createCountryMapTooltip(adm1_name) {
       val = 'No Data';
     }
     var content = '<h2>' + adm1_name + '</h2>' + currentCountryIndicator.name + ':<div class="stat">' + val + '</div>';
-
     tooltip.setHTML(content);
   }
 }
@@ -1535,7 +1534,7 @@ function resetMap() {
     map.flyTo({ 
       speed: 2,
       zoom: zoomLevel,
-      center: [-25, 0] 
+      center: [centerLon, centerLat] 
     });
     map.once('moveend', function() {
       map.setLayoutProperty(globalLayer, 'visibility', 'visible');
