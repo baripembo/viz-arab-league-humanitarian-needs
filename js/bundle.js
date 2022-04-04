@@ -1828,37 +1828,18 @@ function createFootnote(target, indicator, text) {
 //regional id/name list
 const regionalList = [
   {id: 'HRPs', name: 'Humanitarian Response Plan Countries'},
-  {id: 'ROAP', name: 'Asia and the Pacific'},
-  {id: 'ROCCA', name: 'Eastern Europe'},
-  {id: 'ROLAC', name: 'Latin America and the Caribbean'},
   {id: 'ROMENA', name: 'Middle East and North Africa'},
-  {id: 'ROSEA', name: 'Southern and Eastern Africa'},
-  {id: 'ROWCA', name: 'West and Central Africa'}
+  {id: 'ROSEA', name: 'Southern and Eastern Africa'}
 ];
 
 //HRP country codes and raster ids
 const countryCodeList = {
-  ARE: 'c7i9f0cj',
-  BHR: 'acpmlx36',
-  COM: '024napwx',
-  DJI: 'akpp0kan',
-  DZA: '3forrr60',
-  EGY: 'a06s3sgu',
   IRQ: '079oa80i',
-  JOR: 'b9k8x99b',
-  KWT: '7hjgjzz2',
-  LBN: 'b3l5j16w',
   LBY: '0o4l8ysb',
-  MAR: '2nlzuruu',
-  MRT: 'cem8rg64',
-  OMN: '1btqw71a',
   PSE: '1emy37d7',
-  QAT: '1wpd6xew',
-  SAU: '3brjdubl',
   SOM: '3s7xeitz',
   SDN: 'a2zw3leb',
   SYR: '2qt39dhl',
-  TUN: '0pgugqm8',
   YEM: '3m20d1v8',
 };
 
