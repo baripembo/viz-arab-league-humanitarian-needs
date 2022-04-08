@@ -1984,7 +1984,7 @@ function setKeyFigures() {
 		});
 		createKeyFigure('.figures', 'Number of Countries', '', numCountries);
 		createKeyFigure('.figures', 'Total Funding Required (GHO 2022)', '', formatValue(data['#value+funding+hrp+required+usd']));
-		createKeyFigure('.figures', 'Total Funding Level', '', percentFormat(data['#value+funding+hrp+pct']));
+		createKeyFigure('.figures', 'Total Funding Level', '', (data['#value+funding+hrp+required+usd']!=undefined) ? percentFormat(data['#value+funding+hrp+pct']) : 'NA');
 	}
 	//CERF
 	else if (currentIndicator.id=='#value+cerf+funding+total+usd') {
