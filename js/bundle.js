@@ -1854,22 +1854,22 @@ function setKeyFigures() {
 	secondaryPanel.find('.source-container').show();
 
 	//title
-	//secondaryPanel.find('.secondary-panel-title').html(currentIndicator.title);
+	secondaryPanel.find('.secondary-panel-title').html(currentIndicator.title);
 
 	//source
-	// var indicator = currentIndicator.id;
-	// if (indicator=='#affected+inneed+pct') indicator = '#affected+inneed';
-	// if (indicator=='#event+year+todate+num') indicator = '#access-data';
-	// createSource(secondaryPanelSource, indicator);
+	var indicator = currentIndicator.id;
+	if (indicator=='#affected+inneed+pct') indicator = '#affected+inneed';
+	if (indicator=='#event+year+todate+num') indicator = '#access-data';
+	createSource(secondaryPanelSource, indicator);
 
 	//set global stats
-	// var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
+	var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
 	// var globalFigures = '<b>Global COVID-19 Figures:</b><br>'+ d3.format('.3s')(globalData[0]['#affected+infected']) +' total confirmed cases<br>'+ shortenNumFormat(globalData[0]['#affected+killed']) +' total confirmed deaths';
 
 	//show global vax stat only on covax layer
 	if (currentIndicator.id=='#targeted+doses+delivered+pct' && worldData['#capacity+doses+administered+total']!=undefined) {
 		var totalAdministeredVal = d3.format('.3s')(worldData['#capacity+doses+administered+total']).replace(/G/,"B");
-		//globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
+		globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
 	}
 	
 	//print global stats
@@ -1908,11 +1908,11 @@ function setKeyFigures() {
 	//PIN
 	if (currentIndicator.id=='#affected+inneed+pct') {
 		var affectedPIN = (data[indicator]==undefined) ? 0 : (d3.format('.4s'))(data[indicator]);
-		if (currentRegion=='') {
-			//global stats
-			affectedPIN = (d3.format('.4s'))(data['#affected+inneed']);
-			totalCountries =  data['#meta+countries+inneed+num'];
-		}
+		// if (currentRegion=='') {
+		// 	//global stats
+		// 	affectedPIN = (d3.format('.4s'))(data['#affected+inneed']);
+		// 	totalCountries =  data['#meta+countries+inneed+num'];
+		// }
 		createKeyFigure('.figures', 'Number of Countries', '', totalCountries);
 		createKeyFigure('.figures', 'Total Number of People in Need', 'pin', affectedPIN);
 	}
@@ -1920,7 +1920,7 @@ function setKeyFigures() {
 	else if (currentIndicator.id=='#targeted+doses+delivered+pct') {
 		createKeyFigure('.figures', 'Number of Countries', '', totalCountries);
 		createKeyFigure('.figures', 'COVAX Allocations Round 4 – 9 (Number of Doses)', '', data['#capacity+doses+forecast+covax']==undefined ? 'NA' : shortenNumFormat(data['#capacity+doses+forecast+covax']));
-		var covaxDelivered = data['#capacity+doses+delivered+covax'];
+		var covaxDelivered = (data['#capacity+doses+delivered+covax']!=undefined) ? data['#capacity+doses+delivered+covax'] : 'NA';
 		covaxDelivered = (covaxDelivered > 0) ? shortenNumFormat(covaxDelivered) : covaxDelivered;
 		createKeyFigure('.figures', 'COVAX Delivered (Number of Doses)', '', covaxDelivered);
 		createKeyFigure('.figures', 'Other Delivered (Number of Doses)', '', data['#capacity+doses+delivered+others']==undefined ? 'NA' : shortenNumFormat(data['#capacity+doses+delivered+others']));
