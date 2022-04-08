@@ -82,7 +82,7 @@ $( document ).ready(function() {
 
       //parse data
       var allData = data[0];
-      // worldData = allData.world_data[0];
+      worldData = allData.regions_data;
       regionBoundaryData = data[1].features;
       timeseriesData = allData.covid_series_data;
       regionalData = allData.regional_data;

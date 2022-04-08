@@ -94,17 +94,20 @@ function isVal(value) {
 }
 
 function regionMatch(region) {
-  // var match = false;
-  // var regions = region.split('|');
-  // for (var region of regions) {
-  //   if (currentRegion=='' || region==currentRegion) {
-  //     match = true;
-  //     break;
-  //   }
-  // }
-  // return match;
-  //console.log(region)
-  return true;
+  if (region!=undefined) {
+    var match = false;
+    var regions = region.split('|');
+    for (var region of regions) {
+      if (currentRegion=='' || region==currentRegion) {
+        match = true;
+        break;
+      }
+    }
+    return match;
+  }
+  else {
+    return true;
+  }
 }
 
 function hasGamData(data, indicator) {
