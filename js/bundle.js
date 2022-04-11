@@ -1832,7 +1832,8 @@ function createFootnote(target, indicator, text) {
 const regionalList = [
   {id: 'HRPs', name: 'Humanitarian Response Plan Countries'},
   {id: 'ROMENA', name: 'Middle East and North Africa'},
-  {id: 'ROSEA', name: 'Southern and Eastern Africa'}
+  {id: 'ROSEA', name: 'Southern and Eastern Africa'},
+  {id: 'ROWCA', name: 'West and Central Africa'}
 ];
 
 //HRP country codes and raster ids
@@ -1863,13 +1864,13 @@ function setKeyFigures() {
 	createSource(secondaryPanelSource, indicator);
 
 	//set global stats
-	var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
+	//var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
 	// var globalFigures = '<b>Global COVID-19 Figures:</b><br>'+ d3.format('.3s')(globalData[0]['#affected+infected']) +' total confirmed cases<br>'+ shortenNumFormat(globalData[0]['#affected+killed']) +' total confirmed deaths';
 
 	//show global vax stat only on covax layer
 	if (currentIndicator.id=='#targeted+doses+delivered+pct' && worldData['#capacity+doses+administered+total']!=undefined) {
 		var totalAdministeredVal = d3.format('.3s')(worldData['#capacity+doses+administered+total']).replace(/G/,"B");
-		globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
+		//globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
 	}
 	
 	//print global stats
@@ -3822,8 +3823,7 @@ $( document ).ready(function() {
       //parse data
       var allData = data[0];
       console.log(allData)
-      worldData = allData.regions_data;
-      console.log(worldData)
+      worldData = allData.allregions_data[0];
       regionBoundaryData = data[1].features;
       timeseriesData = allData.covid_series_data;
       regionalData = allData.regional_data;
