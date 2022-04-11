@@ -161,7 +161,8 @@ function createFootnote(target, indicator, text) {
 const regionalList = [
   {id: 'HRPs', name: 'Humanitarian Response Plan Countries'},
   {id: 'ROMENA', name: 'Middle East and North Africa'},
-  {id: 'ROSEA', name: 'Southern and Eastern Africa'}
+  {id: 'ROSEA', name: 'Southern and Eastern Africa'},
+  {id: 'ROWCA', name: 'West and Central Africa'}
 ];
 
 //HRP country codes and raster ids

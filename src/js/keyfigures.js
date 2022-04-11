@@ -14,13 +14,13 @@ function setKeyFigures() {
 	createSource(secondaryPanelSource, indicator);
 
 	//set global stats
-	var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
+	//var globalData = regionalData.filter(function(region) { return region['#region+name']=='global'; });
 	// var globalFigures = '<b>Global COVID-19 Figures:</b><br>'+ d3.format('.3s')(globalData[0]['#affected+infected']) +' total confirmed cases<br>'+ shortenNumFormat(globalData[0]['#affected+killed']) +' total confirmed deaths';
 
 	//show global vax stat only on covax layer
 	if (currentIndicator.id=='#targeted+doses+delivered+pct' && worldData['#capacity+doses+administered+total']!=undefined) {
 		var totalAdministeredVal = d3.format('.3s')(worldData['#capacity+doses+administered+total']).replace(/G/,"B");
-		globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
+		//globalFigures += '<br><br><b>Global vaccines administered: '+ totalAdministeredVal +'</b>';
 	}
 	
 	//print global stats
