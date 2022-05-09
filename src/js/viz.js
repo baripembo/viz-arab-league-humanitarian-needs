@@ -73,7 +73,7 @@ $( document ).ready(function() {
   function getData() {
     console.log('Loading data...')
     Promise.all([
-      d3.json('https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-arabstate-viz/main/all.json'),
+      d3.json('https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-arableague-viz/main/all.json'),
       d3.json('data/ocha-regions-bbox.geojson')
     ]).then(function(data) {
       console.log('Data loaded');
