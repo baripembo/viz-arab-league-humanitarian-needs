@@ -1,5 +1,5 @@
 var map, mapFeatures, globalLayer, globalLabelLayer, globalMarkerLayer, countryLayer, countryBoundaryLayer, countryLabelLayer, countryMarkerLayer, tooltip, markerScale, countryMarkerScale;
-var adm0SourceLayer = 'arab_states_polbnda_int_1m_un-dy9soz';
+var adm0SourceLayer = 'arab-states-adm0-polbnda';
 var hoveredStateId = null;
 function initMap() {
   console.log('Loading map...')
