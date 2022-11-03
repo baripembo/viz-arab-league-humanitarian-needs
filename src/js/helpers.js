@@ -1,6 +1,6 @@
 function vizTrack(view, content) {
   mpTrack(view, content);
-  gaTrack('viz interaction', 'switch viz', 'arab league covid-19 / '+view, content);
+  gaTrack('viz interaction hdx', 'switch viz', 'arab league covid-19 data explorer', content);
 }
 
 function mpTrack(view, content) {
@@ -9,18 +9,18 @@ function mpTrack(view, content) {
     'page title': document.title,
     'embedded in': window.location.href,
     'action': 'switch viz',
-    'viz type': 'arab league covid-19',
+    'viz type': 'arab league covid-19 data explorer',
     'current view': view,
     'content': content
   });
 }
 
-function gaTrack(eventCategory, eventAction, eventLabel, type) {
-  ga('send', 'event', eventCategory, eventAction, eventLabel, {
-    'dimension2': type,
-    hitCallback: function() {
-      console.log('Finishing sending click event to GA')
-    }
+function gaTrack(eventCategory, eventAction, eventLabel) {
+  //google tag manager event
+  dataLayer.push({
+    'event': eventCategory,
+    'label': eventAction,
+    'type': eventLabel
   });
 }
 
