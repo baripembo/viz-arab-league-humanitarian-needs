@@ -1424,10 +1424,6 @@ a:visited {
     .content.food-prices-view .layer-description svg {
       height: 33px;
       width: 200px; }
-  .content.tab-view .country-select {
-    top: 80px; }
-  .content.tab-view .mapboxgl-ctrl-top-right {
-    top: 134px; }
 
 .tab-menubar {
   background-color: #FFF;
@@ -2003,29 +1999,12 @@ circle.swatch {
       margin-bottom: 10px; }
       .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .stat + span.inline {
         display: inline-block; }
-    .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .cases-total,
-    .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .deaths-total {
-      color: #333;
-      font-size: 14px;
-      line-height: 15px;
-      margin-top: 2px; }
-    .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .cases-total {
-      margin-top: 8px; }
-      .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .cases-total .subtext {
-        display: block;
-        margin-bottom: 8px; }
     .mapboxgl-popup.map-tooltip .mapboxgl-popup-content ul {
       color: #888;
       list-style-type: disc;
       margin-bottom: 10px; }
       .mapboxgl-popup.map-tooltip .mapboxgl-popup-content ul li {
         margin-left: 30px; }
-    .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .gam {
-      color: #888;
-      line-height: 16px;
-      margin-bottom: 15px; }
-      .mapboxgl-popup.map-tooltip .mapboxgl-popup-content .gam.small-pad {
-        margin-bottom: 6px; }
 
 .mapboxgl-ctrl-top-right {
   top: 84px;
