@@ -5,14 +5,13 @@ var dateFormat = d3.utcFormat("%b %d, %Y");
 var chartDateFormat = d3.utcFormat("%-m/%-d/%y");
 var colorRange = ['#F7DBD9', '#F6BDB9', '#F5A09A', '#F4827A', '#F2645A'];
 var informColorRange = ['#FFE8DC','#FDCCB8','#FC8F6F','#F43C27','#961518'];
-var immunizationColorRange = ['#CCE5F9','#99CBF3','#66B0ED','#3396E7','#027CE1'];
 var populationColorRange = ['#FFE281','#FDB96D','#FA9059','#F27253','#E9554D'];
 var accessColorRange = ['#79B89A','#F6B98E','#C74B4F'];
 var oxfordColorRange = ['#ffffd9','#c7e9b4','#41b6c4','#225ea8','#172976'];
 var schoolClosureColorRange = ['#D8EEBF','#FFF5C2','#F6BDB9','#CCCCCC'];
 var colorDefault = '#F2F2EF';
 var colorNoData = '#FFF';
-var regionBoundaryData, regionalData, worldData, nationalData, subnationalData, subnationalDataByCountry, immunizationData, timeseriesData, covidTrendData, dataByCountry, countriesByRegion, colorScale, viewportWidth, viewportHeight, currentRegion = '';
+var regionBoundaryData, regionalData, worldData, nationalData, subnationalData, subnationalDataByCountry, timeseriesData, covidTrendData, dataByCountry, countriesByRegion, colorScale, viewportWidth, viewportHeight, currentRegion = '';
 var countryTimeseriesChart = '';
 var mapLoaded = false;
 var dataLoaded = false;
@@ -53,7 +52,6 @@ $( document ).ready(function() {
     $('.content').width(viewportWidth + $('.content-left').innerWidth());
     $('.content').height(viewportHeight);
     $('.content-right').width(viewportWidth);
-    $('#chart-view').height(viewportHeight-$('.tab-menubar').outerHeight()-30);
     $('.country-panel .panel-content').height(viewportHeight - $('.country-panel .panel-content').position().top);
     $('.map-legend.global, .map-legend.country').css('max-height', viewportHeight - 200);
     // if (viewportHeight<696) {
@@ -82,7 +80,6 @@ $( document ).ready(function() {
 
       //parse data
       var allData = data[0];
-      console.log(allData)
       worldData = allData.allregions_data[0];
       regionBoundaryData = data[1].features;
       timeseriesData = allData.covid_series_data;
@@ -91,7 +88,7 @@ $( document ).ready(function() {
       subnationalData = allData.subnational_data;
       sourcesData = allData.sources_data;
       covidTrendData = allData.who_covid_data;
-      immunizationData = allData.vaccination_campaigns_data;
+      //immunizationData = allData.vaccination_campaigns_data;
       
       //format data
       subnationalData.forEach(function(item) {
@@ -187,29 +184,29 @@ $( document ).ready(function() {
         .object(nationalData);
 
       //group immunization data by country    
-      immunizationDataByCountry = d3.nest()
-        .key(function(d) { return d['#country+code']; })
-        .entries(immunizationData);
+      // immunizationDataByCountry = d3.nest()
+      //   .key(function(d) { return d['#country+code']; })
+      //   .entries(immunizationData);
 
-      //format dates and set overall status
-      immunizationDataByCountry.forEach(function(country) {
-        var postponed = 'On Track';
-        var isPostponed = false;
-        country.values.forEach(function(campaign) {
-          var d = moment(campaign['#date+start'], ['YYYY-MM','MM/DD/YYYY']);
-          var date = new Date(d.year(), d.month(), d.date());
-          campaign['#date+start'] = (isNaN(date.getTime())) ? campaign['#date+start'] : getMonth(date.getMonth()) + ' ' + date.getFullYear();
-          if (campaign['#status+name'].toLowerCase().indexOf('unknown')>-1 && !isPostponed) postponed = 'Unknown';
-          if (campaign['#status+name'].toLowerCase().indexOf('postponed')>-1) {
-            isPostponed = true;
-            postponed = 'Postponed / May postpone';
-          }
-        });
+      // //format dates and set overall status
+      // immunizationDataByCountry.forEach(function(country) {
+      //   var postponed = 'On Track';
+      //   var isPostponed = false;
+      //   country.values.forEach(function(campaign) {
+      //     var d = moment(campaign['#date+start'], ['YYYY-MM','MM/DD/YYYY']);
+      //     var date = new Date(d.year(), d.month(), d.date());
+      //     campaign['#date+start'] = (isNaN(date.getTime())) ? campaign['#date+start'] : getMonth(date.getMonth()) + ' ' + date.getFullYear();
+      //     if (campaign['#status+name'].toLowerCase().indexOf('unknown')>-1 && !isPostponed) postponed = 'Unknown';
+      //     if (campaign['#status+name'].toLowerCase().indexOf('postponed')>-1) {
+      //       isPostponed = true;
+      //       postponed = 'Postponed / May postpone';
+      //     }
+      //   });
 
-        nationalData.forEach(function(item) {
-          if (item['#country+code'] == country.key) item['#immunization-campaigns'] = postponed;
-        });
-      });
+      //   nationalData.forEach(function(item) {
+      //     if (item['#country+code'] == country.key) item['#immunization-campaigns'] = postponed;
+      //   });
+      // });
 
       //console.log(nationalData)
       //console.log(covidTrendData)

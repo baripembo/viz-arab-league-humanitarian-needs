@@ -167,8 +167,8 @@ const regionalList = [
 
 //HRP country codes and raster ids
 const countryCodeList = {
-  IRQ: '079oa80i',
-  LBY: '0o4l8ysb',
+  //IRQ: '079oa80i',
+  //LBY: '0o4l8ysb',
   PSE: '1emy37d7',
   SOM: '3s7xeitz',
   SDN: 'a2zw3leb',

@@ -255,14 +255,6 @@ a:visited {
 			}
 		}
 	}
-	&.tab-view {
-		.country-select {
-			top: 80px;
-    }
-    .mapboxgl-ctrl-top-right {
-    	top: 134px;
-    }
-	}
 }
 
 .tab-menubar {
@@ -1010,34 +1002,12 @@ circle.swatch {
 				display: inline-block;
 			}
 		}
-		.cases-total,
-		.deaths-total {
-			color: #333;
-			font-size: 14px;
-			line-height: 15px;
-			margin-top: 2px;
-		}
-		.cases-total {
-			margin-top: 8px;
-			.subtext {
-				display: block;
-				margin-bottom: 8px;
-			}
-		}
 		ul {
 			color: #888;
 			list-style-type: disc;
 			margin-bottom: 10px;
 			li { 
 			 	margin-left: 30px;
-			}
-		}
-		.gam {
-			color: #888;
-			line-height: 16px;
-			margin-bottom: 15px;
-			&.small-pad {
-				margin-bottom: 6px;
 			}
 		}
 	}
@@ -1096,7 +1066,7 @@ table.immunization-table {
 		background-color: #FFF;
 		padding: 30px 0 15px;
 		.panel-title {
-   			align-items: center;
+   		align-items: center;
 			display: flex;
 			margin-bottom: 20px;
 		}
