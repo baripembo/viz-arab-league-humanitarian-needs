@@ -52,7 +52,6 @@ $( document ).ready(function() {
     $('.content').width(viewportWidth + $('.content-left').innerWidth());
     $('.content').height(viewportHeight);
     $('.content-right').width(viewportWidth);
-    $('#chart-view').height(viewportHeight-$('.tab-menubar').outerHeight()-30);
     $('.country-panel .panel-content').height(viewportHeight - $('.country-panel .panel-content').position().top);
     $('.map-legend.global, .map-legend.country').css('max-height', viewportHeight - 200);
     // if (viewportHeight<696) {
@@ -81,7 +80,6 @@ $( document ).ready(function() {
 
       //parse data
       var allData = data[0];
-      console.log(allData)
       worldData = allData.allregions_data[0];
       regionBoundaryData = data[1].features;
       timeseriesData = allData.covid_series_data;
