@@ -1,8 +1,8 @@
 {
-  "name": "viz-arab-league-humanitarian-operations",
+  "name": "viz-arab-league-humanitarian-needs",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/ocha-dap/viz-arab-league-humanitarian-operations",
+  "homepage": "https://github.com/ocha-dap/viz-arab-league-humanitarian-needs",
   "main": " ",
   "scripts": {
     "start": "http-server ./dist -c-1 -p 3000",
