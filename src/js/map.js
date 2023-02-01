@@ -607,11 +607,6 @@ function getGlobalLegendScale() {
     else
       scale = d3.scaleQuantile().domain(data).range(colorRange);
   }
-  else if (currentIndicator.id=='#vaccination+postponed+num') {
-    //set the max to at least 5
-    max = (max>5) ? max : 5;
-    scale = d3.scaleQuantize().domain([0, max]).range(colorRange);
-  }
   else if (currentIndicator.id=='#indicator+foodbasket+change+pct') {
     scale = d3.scaleQuantize().domain([min, max]).range(colorRange);
   }
@@ -696,8 +691,6 @@ function setGlobalLegend(scale) {
     createFootnote('.map-legend.global', '#targeted+doses+delivered+pct', 'Note: Data refers to doses delivered to country not administered to people. Only countries with a Humanitarian Response Plan are included');
     //pin footnote
     createFootnote('.map-legend.global', '#affected+inneed+pct', 'The Total Number of People in Need figure corresponds to 28 HRPs, 7 Regional Appeals, Madagascar\'s Flash Appeal and Lebanon\'s ERP. Population percentages greater than 100% include refugees, migrants, and/or asylum seekers');
-    //vacc footnote
-    createFootnote('.map-legend.global', '#vaccination+postponed+num', 'Methodology: Information about interrupted immunization campaigns contains both official and unofficial information sources. The country ranking has been determined by calculating the ratio of total number of postponed campaigns and total immunization campaigns. Note: data collection is ongoing and may not reflect all the campaigns in every country.');
     //food prices footnote
     createFootnote('.map-legend.global', '#indicator+foodbasket+change+pct', 'Methodology: Information about food prices is collected from data during the last 6 month moving window. The country ranking for food prices has been determined by calculating the ratio of the number of commodities in alert, stress or crisis and the total number of commodities. The commodity status comes from <a href="https://dataviz.vam.wfp.org" target="_blank" rel="noopener">WFP’s model</a>.');
     //oxford footnote
@@ -782,7 +775,6 @@ function setGlobalLegend(scale) {
     else {
       var legendFormat = (currentIndicator.id.indexOf('pct')>-1 || currentIndicator.id.indexOf('ratio')>-1) ? d3.format('.0%') : shortenNumFormat;
       if (currentIndicator.id=='#affected+infected+new+per100000+weekly' || currentIndicator.id=='#affected+infected+sex+new+avg+per100000') legendFormat = d3.format('.1f');
-      if (currentIndicator.id=='#vaccination+postponed+num') legendFormat = numFormat;
       
       legend = d3.legendColor()
         .labelFormat(legendFormat)
@@ -895,9 +887,6 @@ function updateCountryLayer() {
   switch(currentCountryIndicator.id) {
     case '#population':
       clrRange = populationColorRange;
-      break;
-    case '#vaccination+postponed+num':
-      clrRange = immunizationColorRange;
       break;
     default:
       clrRange = colorRange;
@@ -1258,27 +1247,6 @@ function createMapTooltip(country_code, country_name, point) {
             if (row.value!=undefined) content += '<div class="table-row row-separator"><div>'+ row.label +':</div><div>'+ numFormat(row.value) +'</div></div>';
           });
           content += '</div>';
-        }
-        //Immunization campaigns layer
-        else if (currentIndicator.id=='#vaccination+postponed+num') {
-          var vaccData = [];
-          immunizationDataByCountry.forEach(function(country) {
-            if (country.key==country_code) {
-              vaccData = country.values;
-            }
-          });
-          if (vaccData.length<1) {
-            var content = '<h2>' + country_name + '</h2><div class="stat">No data</div>';
-          }
-          else {
-            var content = '<h2>' + country_name + '</h2>';
-            content += '<table class="immunization-table"><tr><th>Campaign Immunization:</th><th>Planned Start Date:</th><th>Status:</th></tr>';
-            vaccData.forEach(function(row) {
-              var className = (row['#status+name'].indexOf('Postponed COVID')>-1) ? 'covid-postpone' : '';
-              content += '<tr class="'+className+'"><td>'+row['#service+name']+'</td><td>'+row['#date+start']+'</td><td>'+row['#status+name']+'</td></tr>';
-            });
-            content += '</table>';
-          }
         }
         //INFORM layer
         else if (currentIndicator.id=='#severity+inform+type') {

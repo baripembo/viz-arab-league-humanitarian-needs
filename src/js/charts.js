@@ -549,9 +549,6 @@ function createRankingChart() {
     case '#impact+type':
       indicator = '#impact+full_partial+weeks';
       break;
-    case '#immunization-campaigns':
-      indicator = '#vaccination+postponed+num';
-      break;
     case '#food-prices':
       indicator = '#indicator+foodbasket+change+pct';
       break;
