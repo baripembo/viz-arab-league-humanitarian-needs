@@ -101,10 +101,10 @@
                 <li data-id='#value+funding+hrp+pct' data-legend='Humanitarian Funding Level (HRP)' data-layer='humanitarian_funding_level'>
                   <div><i class='humanitarianicons-Financing'></i>Humanitarian Funding Level</div>
                 </li>
-                <li data-id='#value+cerf+funding+total+usd' data-legend='CERF Allocations 2022' data-layer='cerf_allocations'>
+                <li data-id='#value+cerf+funding+total+usd' data-legend='CERF Allocations 2023' data-layer='cerf_allocations'>
                   <div><i class='humanitarianicons-Fund'></i>CERF Allocations 2023</div>
                 </li>
-                <li data-id='#value+cbpf+funding+total+usd' data-legend='CBPF Allocations 2022' data-layer='cbpf_allocations'>
+                <li data-id='#value+cbpf+funding+total+usd' data-legend='CBPF Allocations 2023' data-layer='cbpf_allocations'>
                   <div><i class='humanitarianicons-Fund'></i>CBPF Allocations 2023</div>
                 </li>
               </ul>
@@ -173,10 +173,6 @@
           </div>
             
           <div id='global-map'>
-<!--             <div class='tab-menubar'>
-              <div class='tab-button active' data-id='map-view'>Map View</div>
-              <div class='tab-button' data-id='chart-view'>Chart View</div>
-            </div> -->
             <div class='map-legend global'>
               <div class='toggle-icon'></div>
               <h4 class='collapsed-title'>MAP LEGEND</h4>
@@ -223,25 +219,8 @@
                 </svg>
               </div>
             </div>
- <!--            <div class='comparison-panel'>
-              <div class='panel-close-btn'><i class='humanitarianicons-Exit-Cancel'></i></div>
-              <h4 class='message'>Click up to 5 countries to add to comparison table</h4>
-              <table class='comparison-table'>
-              </table>
-            </div> -->
           </div>
           <div id="static-map"></div>
-
-<!--           <div id='chart-view'>
-            <div class='source-container'></div>
-            <div class='trendseries-container'>
-              <select id='trendseriesSelect' class='trendseries-select'></select>
-              <div class='cases-title'></div>
-              <div class='cases-trend-chart'></div>
-              <div class='deaths-title'></div>
-              <div class='deaths-trend-chart'></div>
-            </div>
-          </div> -->
 
           <div class='loader'>
             <div class="sp sp-circle"></div>
@@ -259,6 +238,11 @@
             </a>
           </div>
 
+          <div class='title-logo'>
+            <img width='25' src='assets/Emblem_of_the_Arab_League.png' alt='Arab League logo'>
+            <h1 class='title'>Arab League</h1> 
+          </div>
+
           <h1>Humanitarian Needs in the League of Arab States</h1>
           <h2 class='backtoGlobal'><a href='#'>< Back to Global View</a></h2>
 
@@ -267,13 +251,6 @@
               <img src='' class='flag' alt='country flag' />
               <h3></h3>
             </div>
-            
-            <label for='indicatorSelect' class='visuallyhidden'>Select an indicator: </label>
-            <select id='indicatorSelect' class='indicator-select'>
-              <option value=''>Jump to Indicators</option>
-              <option value='hrp'>2023 HRP, CERF and CBPF Funding</option>
-              <option value='inform'>INFORM Severity Index</option>
-            </select>
           </div>
           <div class='panel-content'>
             <div class='hrp'>
