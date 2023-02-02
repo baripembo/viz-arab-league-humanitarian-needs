@@ -2037,13 +2037,16 @@ table.immunization-table {
     padding-left: 0; }
   .country-panel h2 {
     margin-top: 25px; }
+  .country-panel .title-logo img {
+    margin-left: 0; }
+  .country-panel .title-logo h1 {
+    padding-left: 7px; }
   .country-panel .panel-header {
     background-color: #FFF;
-    padding: 30px 0 15px; }
+    padding: 30px 0 0; }
     .country-panel .panel-header .panel-title {
       align-items: center;
-      display: flex;
-      margin-bottom: 20px; }
+      display: flex; }
     .country-panel .panel-header .flag {
       height: 35px;
       margin-right: 10px;

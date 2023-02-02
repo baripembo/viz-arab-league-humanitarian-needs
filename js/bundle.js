@@ -1335,7 +1335,7 @@ function setKeyFigures() {
 			}
 		});
 		createKeyFigure('.figures', 'Number of Countries', '', numCountries);
-		createKeyFigure('.figures', 'Total Funding Required (GHO 2022)', '', formatValue(data['#value+funding+hrp+required+usd']));
+		createKeyFigure('.figures', 'Total Funding Required (GHO 2023)', '', formatValue(data['#value+funding+hrp+required+usd']));
 		createKeyFigure('.figures', 'Total Funding Level', '', (data['#value+funding+hrp+required+usd']!=undefined) ? percentFormat(data['#value+funding+hrp+pct']) : 'NA');
 	}
 	//CERF
@@ -1456,7 +1456,7 @@ function displayMap() {
 
   //position global figures
   if (window.innerWidth>=1440) {
-    $('.menu-indicators li:first-child div').addClass('expand');
+    $('.menu-indicators:first li:first-child div').addClass('expand');
     $('.tab-menubar, #chart-view, .comparison-panel').css('left', $('.secondary-panel').outerWidth());
     $('.secondary-panel').animate({
       left: 0
@@ -2051,9 +2051,9 @@ function setGlobalLegend(scale) {
     //food prices footnote
     createFootnote('.map-legend.global', '#indicator+foodbasket+change+pct', 'Methodology: Information about food prices is collected from data during the last 6 month moving window. The country ranking for food prices has been determined by calculating the ratio of the number of commodities in alert, stress or crisis and the total number of commodities. The commodity status comes from <a href="https://dataviz.vam.wfp.org" target="_blank" rel="noopener">WFP’s model</a>.');
     //CERF footnote
-    createFootnote('.map-legend.global', '#value+cerf+funding+total+usd', 'The Total CERF Funding 2022 figure refers to the Global CERF Allocations, including some non-GHO locations which are not listed on this dashboard.');
+    createFootnote('.map-legend.global', '#value+cerf+funding+total+usd', 'The Total CERF Funding 2023 figure refers to the Global CERF Allocations, including some non-GHO locations which are not listed on this dashboard.');
     //CBPF footnote
-    createFootnote('.map-legend.global', '#value+cbpf+funding+total+usd', 'The Total CBPF Funding 2022 figure refers to the Global CBPF Allocations, including some non-GHO locations which are not listed on this dashboard.');
+    createFootnote('.map-legend.global', '#value+cbpf+funding+total+usd', 'The Total CBPF Funding 2023 figure refers to the Global CBPF Allocations, including some non-GHO locations which are not listed on this dashboard.');
     
     //boundaries disclaimer
     createFootnote('.map-legend.global', '', 'The boundaries and names shown and the designations used on this map do not imply official endorsement or acceptance by the United Nations.');
