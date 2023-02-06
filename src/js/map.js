@@ -957,16 +957,9 @@ function createMapTooltip(country_code, country_name, point) {
         //set formats for value
         if (isVal(val)) {
           if (currentIndicator.id.indexOf('pct')>-1) {
-            if (currentIndicator.id=='#value+gdp+ifi+pct' || currentIndicator.id=='#targeted+doses+delivered+pct') {
-              if (isNaN(val))
-                val = 'No Data'
-              else
-                val = (val==0) ? '0%' : d3.format('.2%')(val);
-            }
-            else
-              val = (isNaN(val)) ? 'No Data' : percentFormat(val);
+            val = (isNaN(val)) ? 'No Data' : percentFormat(val);
           }
-          if (currentIndicator.id.indexOf('funding+total')>-1) val = formatValue(val);
+          if (currentIndicator.id.indexOf('total+usd')>-1) val = formatValue(val);
         }
         else {
           val = 'No Data';
@@ -1039,8 +1032,7 @@ function createMapTooltip(country_code, country_name, point) {
             content += '<div class="table-display">';
             tableArray.forEach(function(row) {
               if (isVal(row.value)) {
-                var value = (row.label=='HRP Funding Level for COVID-19 GHRP') ? percentFormat(row.value) : formatValue(row.value);
-                content += '<div class="table-row"><div>'+ row.label +':</div><div>'+ value +'</div></div>';
+                content += '<div class="table-row"><div>'+ row.label +':</div><div>'+ formatValue(row.value) +'</div></div>';
               }
             });
             content += '</div>';
@@ -1064,56 +1056,6 @@ function createMapTooltip(country_code, country_name, point) {
             }
             else {
               content +=  currentIndicator.name + ':<div class="stat">N/A</div>';
-            }
-          }
-        }
-        //CERF
-        else if (currentIndicator.id=='#value+cerf+covid+funding+total+usd') {
-          content +=  currentIndicator.name + ':<div class="stat">' + val + '</div>';
-          if (val!='No Data') {
-            if (country[0]['#value+cerf+covid+funding+total+usd'] > 0) {
-              var gmText = getGamText(country[0], 'cerf');
-              content += '<div class="gam">'+ gmText +'</div>';
-            }
-          }
-        }
-        //CBPF
-        else if (currentIndicator.id=='#value+cbpf+covid+funding+total+usd') {
-          content +=  currentIndicator.name + ':<div class="stat">' + val + '</div>';
-          //hardcode value for CBPF Turkey
-          if (country_code=='TUR') content+='<span>(Syria Cross Border HF)</span>';
-
-          if (val!='No Data') {
-            //gam
-            if (country[0]['#value+cbpf+covid+funding+total+usd'] > 0) {
-              var gmText = getGamText(country[0], 'cbpf');
-              content += '<div class="gam small-pad">'+ gmText +'</div>';
-            }
-
-            //beneficieries
-            if (country[0]['#affected+cbpf+covid+funding+total'] > 0) {
-              var beneficiaryText = getBeneficiaryText(country[0]);
-              content += '<div class="gam">'+ beneficiaryText +'</div>';
-            }
-          }
-        }
-        //IFI financing layer
-        else if (currentIndicator.id=='#value+gdp+ifi+pct') {
-          content +=  currentIndicator.name + ':<div class="stat">' + val + '</div>';
-          if (val!='No Data') {
-            content += '<div class="table-display">';
-            if (isVal(country[0]['#value+ifi+percap'])) content += '<div class="table-row"><div>Total IFI Funding per Capita:</div><div>'+ d3.format('$,.2f')(country[0]['#value+ifi+percap']) +'</div></div>';
-            if (isVal(country[0]['#value+ifi+total'])) content += '<div class="table-row"><div>Total Amount Combined:</div><div>'+ formatValue(country[0]['#value+ifi+total']) +'</div></div>';
-            content += '</div>';
-
-            if (parseFloat(val)>0) {
-              content += '<div class="table-display subtext">Breakdown:';
-              var fundingArray = ['adb','afdb','eib', 'ebrd', 'idb','ifc','imf','isdb','unmptf','wb'];
-              fundingArray.forEach(function(fund) {
-                var fundName = (fund=='wb') ? 'World Bank' : fund.toUpperCase(); 
-                if (isVal(country[0]['#value+'+fund+'+total'])) content += '<div class="table-row"><div>'+ fundName +':</div><div>'+ formatValue(country[0]['#value+'+fund+'+total']) +'</div></div>';
-              });
-              content += '</div>';
             }
           }
         }

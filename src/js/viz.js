@@ -88,6 +88,7 @@ $( document ).ready(function() {
       subnationalData = allData.subnational_data;
       sourcesData = allData.sources_data;
       covidTrendData = allData.who_covid_data;
+      console.log(nationalData)
       //immunizationData = allData.vaccination_campaigns_data;
       
       //format data
@@ -234,8 +235,8 @@ $( document ).ready(function() {
     var countryArray = Object.keys(countryCodeList);
     hrpData = nationalData.filter((row) => countryArray.includes(row['#country+code']));
     
-    //remove UKR from country pages for now
-    hrpData = hrpData.filter((item) => item['#country+code']!=='UKR');
+    // //remove UKR from country pages for now
+    // hrpData = hrpData.filter((item) => item['#country+code']!=='UKR');
 
     hrpData.sort(function(a, b){
       return d3.ascending(a['#country+name'].toLowerCase(), b['#country+name'].toLowerCase());
@@ -250,79 +251,79 @@ $( document ).ready(function() {
     $('.country-select').prepend('<option value="">View Country Page</option>');
     $('.country-select').val($('.country-select option:first').val());
 
-    //create chart view country select
-    var trendseriesSelect = d3.select('.trendseries-select')
-      .selectAll('option')
-      .data(globalCountryList)
-      .enter().append('option')
-        .text(function(d) { 
-          var name = (d.name=='oPt') ? 'Occupied Palestinian Territory' : d.name;
-          return name; 
-        })
-        .attr('value', function (d) { return d.code; });
+    // //create chart view country select
+    // var trendseriesSelect = d3.select('.trendseries-select')
+    //   .selectAll('option')
+    //   .data(globalCountryList)
+    //   .enter().append('option')
+    //     .text(function(d) { 
+    //       var name = (d.name=='oPt') ? 'Occupied Palestinian Territory' : d.name;
+    //       return name; 
+    //     })
+    //     .attr('value', function (d) { return d.code; });
 
-    //create tab events
-    $('.tab-menubar .tab-button').on('click', function() {
-      $('.tab-button').removeClass('active');
-      $(this).addClass('active');
-      if ($(this).data('id')=='chart-view') {
-        $('#chart-view').show();
-      }
-      else {
-        $('#chart-view').hide();
-      }
-      vizTrack($(this).data('id'), currentIndicator.name);
-    });
+    // //create tab events
+    // $('.tab-menubar .tab-button').on('click', function() {
+    //   $('.tab-button').removeClass('active');
+    //   $(this).addClass('active');
+    //   if ($(this).data('id')=='chart-view') {
+    //     $('#chart-view').show();
+    //   }
+    //   else {
+    //     $('#chart-view').hide();
+    //   }
+    //   vizTrack($(this).data('id'), currentIndicator.name);
+    // });
 
-    //set daily download date
-    var today = new Date();
-    $('.download-link .today-date').text(dateFormat(today));
-    $('.download-daily').on('click', function() {  
-      //mixpanel event
-      mixpanel.track('link click', {
-        'embedded in': window.location.href,
-        'destination url': $(this).attr('href'),
-        'link type': 'download report',
-        'page title': document.title
-      });
+    // //set daily download date
+    // var today = new Date();
+    // $('.download-link .today-date').text(dateFormat(today));
+    // $('.download-daily').on('click', function() {  
+    //   //mixpanel event
+    //   mixpanel.track('link click', {
+    //     'embedded in': window.location.href,
+    //     'destination url': $(this).attr('href'),
+    //     'link type': 'download report',
+    //     'page title': document.title
+    //   });
 
-      //google analytics event
-      gaTrack('oad covid-19 link', $(this).attr('href'), 'download report', document.title);
-    });
+    //   //google analytics event
+    //   gaTrack('oad covid-19 link', $(this).attr('href'), 'download report', document.title);
+    // });
 
-    //show/hide NEW label for monthly report
-    sourcesData.forEach(function(item) {
-      if (item['#indicator+name']=='#meta+monthly+report') {
-        var today = new Date();
-        var newDate = new Date(item['#date'])
-        newDate.setDate(newDate.getDate() + 7) //leave NEW tag up for 1 week
-        if (today > newDate)
-          $('.download-monthly').find('label').hide()
-        else
-          $('.download-monthly').find('label').show()
-      }
-    })
+    // //show/hide NEW label for monthly report
+    // sourcesData.forEach(function(item) {
+    //   if (item['#indicator+name']=='#meta+monthly+report') {
+    //     var today = new Date();
+    //     var newDate = new Date(item['#date'])
+    //     newDate.setDate(newDate.getDate() + 7) //leave NEW tag up for 1 week
+    //     if (today > newDate)
+    //       $('.download-monthly').find('label').hide()
+    //     else
+    //       $('.download-monthly').find('label').show()
+    //   }
+    // })
 
     //track monthly pdf download
-    $('.download-monthly').on('click', function() {  
-      //mixpanel event
-      mixpanel.track('link click', {
-        'embedded in': window.location.href,
-        'destination url': $(this).attr('href'),
-        'link type': 'download report',
-        'page title': document.title
-      });
+    // $('.download-monthly').on('click', function() {  
+    //   //mixpanel event
+    //   mixpanel.track('link click', {
+    //     'embedded in': window.location.href,
+    //     'destination url': $(this).attr('href'),
+    //     'link type': 'download report',
+    //     'page title': document.title
+    //   });
 
-      //google analytics event
-      gaTrack('oad covid-19 link', $(this).attr('href'), 'download report', document.title);
-    });
+    //   //google analytics event
+    //   gaTrack('arab league link', $(this).attr('href'), 'download report', document.title);
+    // });
 
     //load trenseries for global view
-    createSource($('#chart-view .source-container'), '#affected+infected');
-    initTrendseries(globalCountryList[0].code);
+    //createSource($('#chart-view .source-container'), '#affected+infected');
+    //initTrendseries(globalCountryList[0].code);
 
     //load timeseries for country view 
-    initTimeseries(timeseriesData, '.country-timeseries-chart');
+    //initTimeseries(timeseriesData, '.country-timeseries-chart');
 
     //check map loaded status
     if (mapLoaded==true && viewInitialized==false)

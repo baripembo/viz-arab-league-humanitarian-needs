@@ -41,7 +41,7 @@ function createRankingChart() {
 
   var valueMax = d3.max(rankingData, function(d) { return +d.value; });
   valueFormat = d3.format(',.0f');
-  if (indicator.indexOf('funding')>-1 || indicator.indexOf('gdp')>-1) {
+  if (indicator.indexOf('total+usd')>-1 || indicator.indexOf('gdp')>-1) {
     valueFormat = formatValue;
     rankingData.reverse();
     $('.ranking-select').val('ascending');
