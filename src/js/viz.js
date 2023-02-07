@@ -11,7 +11,7 @@ var oxfordColorRange = ['#ffffd9','#c7e9b4','#41b6c4','#225ea8','#172976'];
 var schoolClosureColorRange = ['#D8EEBF','#FFF5C2','#F6BDB9','#CCCCCC'];
 var colorDefault = '#F2F2EF';
 var colorNoData = '#FFF';
-var regionBoundaryData, regionalData, worldData, nationalData, subnationalData, subnationalDataByCountry, timeseriesData, covidTrendData, dataByCountry, countriesByRegion, colorScale, viewportWidth, viewportHeight, currentRegion = '';
+var regionBoundaryData, regionalData, worldData, nationalData, subnationalData, subnationalDataByCountry, dataByCountry, countriesByRegion, colorScale, viewportWidth, viewportHeight, currentRegion = '';
 var countryTimeseriesChart = '';
 var mapLoaded = false;
 var dataLoaded = false;
@@ -22,7 +22,6 @@ var centerLat = 20;
 
 var hrpData = [];
 var globalCountryList = [];
-var comparisonList = [];
 var currentIndicator = {};
 var currentCountryIndicator = {};
 var currentCountry = {};
@@ -82,14 +81,10 @@ $( document ).ready(function() {
       var allData = data[0];
       worldData = allData.allregions_data[0];
       regionBoundaryData = data[1].features;
-      timeseriesData = allData.covid_series_data;
       regionalData = allData.regional_data;
       nationalData = allData.national_data;
       subnationalData = allData.subnational_data;
       sourcesData = allData.sources_data;
-      covidTrendData = allData.who_covid_data;
-      console.log(nationalData)
-      //immunizationData = allData.vaccination_campaigns_data;
       
       //format data
       subnationalData.forEach(function(item) {
@@ -102,24 +97,9 @@ $( document ).ready(function() {
       nationalData.forEach(function(item) {
         //normalize country names
         if (item['#country+name']=='State of Palestine') item['#country+name'] = 'occupied Palestinian territory';
-        if (item['#country+name']=='Bolivia (Plurinational State of)') item['#country+name'] = 'Bolivia';
-
-        //hardcode CBPF val for Turkey
-        if (item['#country+code']=='TUR') item['#value+cbpf+covid+funding+total+usd'] = 23000000;
 
         //calculate and inject PIN percentage
         item['#affected+inneed+pct'] = (item['#affected+inneed']=='' || item['#population']=='') ? '' : item['#affected+inneed']/item['#population'];
-        
-        //store covid trend data
-        var covidByCountry = covidTrendData[item['#country+code']];
-        item['#covid+trend+pct'] = (covidByCountry==undefined) ? null : covidByCountry[covidByCountry.length-1]['#affected+infected+new+pct+weekly'];
-        item['#affected+infected+new+per100000+weekly'] = (covidByCountry==undefined) ? null : covidByCountry[covidByCountry.length-1]['#affected+infected+new+per100000+weekly'];
-        item['#affected+infected+new+weekly'] = (covidByCountry==undefined) ? null : covidByCountry[covidByCountry.length-1]['#affected+infected+new+weekly'];
-        item['#affected+killed+new+weekly'] = (covidByCountry==undefined) ? null : covidByCountry[covidByCountry.length-1]['#affected+killed+new+weekly'];
-        item['#covid+total+cases+per+capita'] = (item['#affected+infected'] / item['#population']) * 100000;
-
-        //create cases by gender indicator
-        item['#affected+infected+sex+new+avg+per100000'] = (item['#affected+infected+m+pct']!=undefined || item['#affected+f+infected+pct']!=undefined) ? item['#affected+infected+new+per100000+weekly'] : null;
         
         //select CH vs IPC data
         var ipcParams = ['+analysed+num','+p3+num','+p3plus+num','+p4+num','+p5+num']
@@ -174,43 +154,12 @@ $( document ).ready(function() {
         }
         //default to ipc source if both ipc and ch are empty
         country['#ipc+source'] = (!ipcEmpty || chEmpty && ipcEmpty) ? '#affected+food+ipc+p3plus+num' : '#affected+ch+food+p3plus+num';
-
-        //exception for CAF, should default to ch
-        if (country.key=='CAF' && !chEmpty) country['#ipc+source'] = '#affected+ch+food+p3plus+num';
       });
 
       //group countries by region    
       countriesByRegion = d3.nest()
         .key(function(d) { return d['#region+name']; })
         .object(nationalData);
-
-      //group immunization data by country    
-      // immunizationDataByCountry = d3.nest()
-      //   .key(function(d) { return d['#country+code']; })
-      //   .entries(immunizationData);
-
-      // //format dates and set overall status
-      // immunizationDataByCountry.forEach(function(country) {
-      //   var postponed = 'On Track';
-      //   var isPostponed = false;
-      //   country.values.forEach(function(campaign) {
-      //     var d = moment(campaign['#date+start'], ['YYYY-MM','MM/DD/YYYY']);
-      //     var date = new Date(d.year(), d.month(), d.date());
-      //     campaign['#date+start'] = (isNaN(date.getTime())) ? campaign['#date+start'] : getMonth(date.getMonth()) + ' ' + date.getFullYear();
-      //     if (campaign['#status+name'].toLowerCase().indexOf('unknown')>-1 && !isPostponed) postponed = 'Unknown';
-      //     if (campaign['#status+name'].toLowerCase().indexOf('postponed')>-1) {
-      //       isPostponed = true;
-      //       postponed = 'Postponed / May postpone';
-      //     }
-      //   });
-
-      //   nationalData.forEach(function(item) {
-      //     if (item['#country+code'] == country.key) item['#immunization-campaigns'] = postponed;
-      //   });
-      // });
-
-      //console.log(nationalData)
-      //console.log(covidTrendData)
 
       dataLoaded = true;
       if (mapLoaded==true) displayMap();
@@ -234,9 +183,6 @@ $( document ).ready(function() {
     //create hrp country select
     var countryArray = Object.keys(countryCodeList);
     hrpData = nationalData.filter((row) => countryArray.includes(row['#country+code']));
-    
-    // //remove UKR from country pages for now
-    // hrpData = hrpData.filter((item) => item['#country+code']!=='UKR');
 
     hrpData.sort(function(a, b){
       return d3.ascending(a['#country+name'].toLowerCase(), b['#country+name'].toLowerCase());
@@ -250,30 +196,6 @@ $( document ).ready(function() {
     //insert default option    
     $('.country-select').prepend('<option value="">View Country Page</option>');
     $('.country-select').val($('.country-select option:first').val());
-
-    // //create chart view country select
-    // var trendseriesSelect = d3.select('.trendseries-select')
-    //   .selectAll('option')
-    //   .data(globalCountryList)
-    //   .enter().append('option')
-    //     .text(function(d) { 
-    //       var name = (d.name=='oPt') ? 'Occupied Palestinian Territory' : d.name;
-    //       return name; 
-    //     })
-    //     .attr('value', function (d) { return d.code; });
-
-    // //create tab events
-    // $('.tab-menubar .tab-button').on('click', function() {
-    //   $('.tab-button').removeClass('active');
-    //   $(this).addClass('active');
-    //   if ($(this).data('id')=='chart-view') {
-    //     $('#chart-view').show();
-    //   }
-    //   else {
-    //     $('#chart-view').hide();
-    //   }
-    //   vizTrack($(this).data('id'), currentIndicator.name);
-    // });
 
     // //set daily download date
     // var today = new Date();
@@ -317,13 +239,6 @@ $( document ).ready(function() {
     //   //google analytics event
     //   gaTrack('arab league link', $(this).attr('href'), 'download report', document.title);
     // });
-
-    //load trenseries for global view
-    //createSource($('#chart-view .source-container'), '#affected+infected');
-    //initTrendseries(globalCountryList[0].code);
-
-    //load timeseries for country view 
-    //initTimeseries(timeseriesData, '.country-timeseries-chart');
 
     //check map loaded status
     if (mapLoaded==true && viewInitialized==false)
