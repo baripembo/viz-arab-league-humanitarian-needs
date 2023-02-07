@@ -1964,9 +1964,14 @@ function updateGlobalLayer() {
 }
 
 function getGlobalLegendScale() {
+  let data = new Array(); //create copy of indicator data for quantile scales
+
   //get min/max
   var min = d3.min(nationalData, function(d) { 
-    if (regionMatch(d['#region+name'])) return +d[currentIndicator.id]; 
+    if (regionMatch(d['#region+name'])) {
+      data.push(+d[currentIndicator.id]);
+      return +d[currentIndicator.id];
+    }
   });
   var max = d3.max(nationalData, function(d) { 
     if (regionMatch(d['#region+name'])) return +d[currentIndicator.id];
@@ -1995,6 +2000,9 @@ function getGlobalLegendScale() {
     scale = d3.scaleThreshold()
       .domain([ .01, .02, .03, .05, .05 ])
       .range(reverseRange);
+  }
+  else if (currentIndicator.id=='#value+cerf+contributions+total+usd') {
+    scale = d3.scaleQuantile().domain(data).range(colorRange);
   }
   else {
     scale = d3.scaleQuantize().domain([0, max]).range(colorRange);
