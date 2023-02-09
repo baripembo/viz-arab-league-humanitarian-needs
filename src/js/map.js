@@ -45,40 +45,6 @@ function displayMap() {
     title: $('.menu-indicators').find('.selected').text()
   };
 
-  //init element events
-  createEvents();
-
-  //get layers
-  // map.getStyle().layers.map(function (layer) {
-  //   switch(layer.id) {
-  //     case 'adm0-fills':
-  //       globalLayer = layer.id;
-
-  //       map.setFeatureState(
-  //         { source: 'composite', sourceLayer: adm0SourceLayer, id: globalLayer },
-  //         { hover: false }
-  //       );
-  //       break;
-  //     case 'adm0-label':
-  //       globalLabelLayer = layer.id;
-  //       break;
-  //     case 'adm1-fills':
-  //       countryLayer = layer.id;
-  //       map.setLayoutProperty(countryLayer, 'visibility', 'none');
-  //       break;
-  //     case 'adm1-label':
-  //       countryLabelLayer = layer.id;
-  //       map.setLayoutProperty(countryLabelLayer, 'visibility', 'none');
-  //       break;
-  //     case 'adm1-boundaries':
-  //       countryBoundaryLayer = layer.id;
-  //       map.setLayoutProperty(countryBoundaryLayer, 'visibility', 'none');
-  //       break;
-  //     default:
-  //       //do nothing
-  //   }
-  // });
-
   //get bottommost layer from basemap
   const layers = map.getStyle().layers;
   for (const layer of layers) {
@@ -94,8 +60,15 @@ function displayMap() {
 
   //layer sources
   let adm0Source = 'arab-states-adm0-polbnda';
+  let adm0CentroidSource = 'arab_states_centroid_int_1m_u-9kgyhy';
   let adm1Source = 'arab_states_polbnda_adm1_1m_u-17b61m';
   let adm1CentroidSource = 'arab_states_centroid_adm1_1m_-4nnaer';
+
+
+  //hide labels from mapbox style
+  map.setLayoutProperty('Countries 2-4', 'visibility', 'none');
+  map.setLayoutProperty('Countries 4-6', 'visibility', 'none');
+
 
   //adm0
   map.addSource('adm0-polygons', {
@@ -117,68 +90,100 @@ function displayMap() {
   globalLayer = 'adm0-fills';
   map.setLayoutProperty(globalLayer, 'visibility', 'visible');
 
-  // //adm1
-  // map.addSource('adm1-polygons', {
-  //   'url': 'mapbox://humdata.attm70id',
-  //   'type': 'vector'
-  // });
+  //adm0 centroids
+  map.addSource('adm0-centroids', {
+    'url': 'mapbox://humdata.d4ywfeza',
+    'type': 'vector'
+  });
 
-  // //adm1 fills
-  // map.addLayer({
-  //   'id': 'adm1-fills',
-  //   'type': 'fill',
-  //   'source': 'adm1-polygons',
-  //   'source-layer': adm1Source,
-  //   'paint': {
-  //     'fill-color': '#F1F1EE',
-  //     'fill-opacity': 1,
-  //   }
-  // }, baseLayer);
-  // countryLayer = 'adm1-fills';
-  // map.setLayoutProperty(countryLayer, 'visibility', 'visible');
+  //adm0 labels
+  map.addLayer({
+    'id': 'adm0-labels',
+    'type': 'symbol',
+    'source': 'adm0-centroids',
+    'source-layer': adm0CentroidSource,
+    'layout': {
+      'text-field': [
+        'format',
+        ['upcase', ['get', 'Terr_Name']]
+      ],
+      'text-font': ['DIN Pro Medium', 'Arial Unicode MS Bold'],
+      'text-size': ['interpolate', ['linear'], ['zoom'], 0, 12, 4, 14],
+      'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+      'text-padding': 8
+    },
+    paint: {
+      'text-color': '#444',
+      'text-halo-color': '#FFF',
+      'text-halo-width': 1,
+      'text-halo-blur': 0
+    }
+  }, baseLayer);
+  globalLabelLayer = 'adm0-labels';
+  map.setLayoutProperty(globalLabelLayer, 'visibility', 'visible');
 
-  // //centroids source
-  // map.addSource('adm1-centroids', {
-  //   'url': 'mapbox://humdata.8pyb1abd',
-  //   'type': 'vector'
-  // });
+  //adm1
+  map.addSource('adm1-polygons', {
+    'url': 'mapbox://humdata.attm70id',
+    'type': 'vector'
+  });
 
-  // //centroids
-  // map.addLayer({
-  //   'id': 'adm1-labels',
-  //   'type': 'symbol',
-  //   'source': 'adm1-centroids',
-  //   'source-layer': adm1CentroidSource,
-  //   'layout': {
-  //     'text-field': ['get', 'ADM_REF'],
-  //     'text-font': ['DIN Pro Medium', 'Arial Unicode MS Bold'],
-  //     'text-size': ['interpolate', ['linear'], ['zoom'], 0, 12, 4, 14],
-  //     'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-  //     'text-padding': 8
-  //   },
-  //   paint: {
-  //     'text-color': '#666',
-  //     'text-halo-color': '#EEE',
-  //     'text-halo-width': 1,
-  //     'text-halo-blur': 1
-  //   }
-  // }, baseLayer);
-  // countryLabelLayer = 'adm1-labels';
-  // map.setLayoutProperty(countryLabelLayer, 'visibility', 'visible');
+  //adm1 fills
+  map.addLayer({
+    'id': 'adm1-fills',
+    'type': 'fill',
+    'source': 'adm1-polygons',
+    'source-layer': adm1Source,
+    'paint': {
+      'fill-color': '#F1F1EE',
+      'fill-opacity': 1,
+    }
+  }, baseLayer);
+  countryLayer = 'adm1-fills';
+  map.setLayoutProperty(countryLayer, 'visibility', 'none');
 
-  // //boundaries
-  // map.addLayer({
-  //   'id': 'adm1-boundaries',
-  //   'type': 'line',
-  //   'source': 'adm1-polygons',
-  //   'source-layer': adm1Source,
-  //   'paint': {
-  //     'line-color': '#E0E0E0',
-  //     'line-opacity': 1
-  //   }
-  // }, baseLayer);
-  // countryBoundaryLayer = 'adm1-boundaries';
-  // map.setLayoutProperty(countryBoundaryLayer, 'visibility', 'visible');
+  //centroids source
+  map.addSource('adm1-centroids', {
+    'url': 'mapbox://humdata.8pyb1abd',
+    'type': 'vector'
+  });
+
+  //centroids
+  map.addLayer({
+    'id': 'adm1-labels',
+    'type': 'symbol',
+    'source': 'adm1-centroids',
+    'source-layer': adm1CentroidSource,
+    'layout': {
+      'text-field': ['get', 'ADM_REF'],
+      'text-font': ['DIN Pro Medium', 'Arial Unicode MS Bold'],
+      'text-size': ['interpolate', ['linear'], ['zoom'], 0, 12, 4, 14],
+      'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+      'text-padding': 8
+    },
+    paint: {
+      'text-color': '#666',
+      'text-halo-color': '#EEE',
+      'text-halo-width': 1,
+      'text-halo-blur': 1
+    }
+  });
+  countryLabelLayer = 'adm1-labels';
+  map.setLayoutProperty(countryLabelLayer, 'visibility', 'none');
+
+  //boundaries
+  map.addLayer({
+    'id': 'adm1-boundaries',
+    'type': 'line',
+    'source': 'adm1-polygons',
+    'source-layer': adm1Source,
+    'paint': {
+      'line-color': '#E0E0E0',
+      'line-opacity': 1
+    }
+  }, baseLayer);
+  countryBoundaryLayer = 'adm1-boundaries';
+  map.setLayoutProperty(countryBoundaryLayer, 'visibility', 'none');
 
   mapFeatures = map.queryRenderedFeatures();
 
@@ -209,25 +214,12 @@ function displayMap() {
     }
   });
 
-  //country select event
-  d3.select('.country-select').on('change',function(e) {
-    var selected = d3.select('.country-select').node().value;
-    if (selected=='') {
-      resetMap();
-    }
-    else {        
-      currentCountry.code = selected;
-      currentCountry.name = d3.select('.country-select option:checked').text();
-
-      //find matched features and zoom to country
-      var selectedFeatures = matchMapFeatures(currentCountry.code);
-      selectCountry(selectedFeatures);
-    }
-  });
-
   //init global and country layers
   initGlobalLayer();
   initCountryLayer();
+
+  //init element events
+  createEvents();
 
   //deeplink to country if parameter exists
   if (viewInitialized==true) deepLinkView();
@@ -268,8 +260,9 @@ function deepLinkView() {
 function matchMapFeatures(country_code) {
   //loop through mapFeatures to find matches to currentCountry.code
   var selectedFeatures = [];
+  console.log(currentCountry.code)
   mapFeatures.forEach(function(feature) {
-    if (feature.sourceLayer==adm0SourceLayer && feature.properties.ISO_3==currentCountry.code) {
+    if (feature.sourceLayer=='wrl_polbnda_1m_ungis' && feature.properties.ISO3_CODE==currentCountry.code) {
       selectedFeatures.push(feature)
     }
   });
