@@ -260,10 +260,14 @@ function deepLinkView() {
 function matchMapFeatures(country_code) {
   //loop through mapFeatures to find matches to currentCountry.code
   var selectedFeatures = [];
-  console.log(currentCountry.code)
   mapFeatures.forEach(function(feature) {
-    if (feature.sourceLayer=='wrl_polbnda_1m_ungis' && feature.properties.ISO3_CODE==currentCountry.code) {
-      selectedFeatures.push(feature)
+    if (feature.sourceLayer=='wrl_polbnda_1m_ungis') {
+      if (currentCountry.code=='PSE') { //match two features by territory name for PSE
+        if (feature.properties.Terr_Name=='Gaza Strip' || feature.properties.Terr_Name=='West Bank') selectedFeatures.push(feature);
+      } 
+      else {
+        if (feature.properties.Color_Code==currentCountry.code) selectedFeatures.push(feature);
+      }
     }
   });
   return selectedFeatures;
