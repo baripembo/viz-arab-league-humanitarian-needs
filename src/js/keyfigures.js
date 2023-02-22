@@ -59,13 +59,7 @@ function setKeyFigures() {
 	}
 	//humanitarian funding
 	else if (currentIndicator.id=='#value+funding+hrp+pct') {
-		var numCountries = 0;
-		nationalData.forEach(function(d) {
-			if (regionMatch(d['#region+name'])) {
-				numCountries++;
-			}
-		});
-		createKeyFigure('.figures', 'Number of Countries', '', numCountries);
+		createKeyFigure('.figures', 'Number of Countries', '', totalCountries);
 		createKeyFigure('.figures', 'Total Funding Required (GHO 2023)', '', formatValue(data['#value+funding+hrp+required+usd']));
 		createKeyFigure('.figures', 'Total Funding Level', '', (data['#value+funding+hrp+required+usd']!=undefined) ? percentFormat(data['#value+funding+hrp+pct']) : 'NA');
 	}
